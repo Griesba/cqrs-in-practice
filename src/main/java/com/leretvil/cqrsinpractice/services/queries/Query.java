@@ -1,7 +1,7 @@
-package com.leretvil.cqrsinpractice.services.commands;
+package com.leretvil.cqrsinpractice.services.queries;
 
 import com.leretvil.cqrsinpractice.services.messages.MessageType;
 
-public interface Command  {
+public interface Query<TResult> {
     String getType();
 }

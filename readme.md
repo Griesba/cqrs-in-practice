@@ -4,7 +4,7 @@ Command Query Responsibility Segregation (CQRS) originates from the Command Quer
 - CQRS extend CQS to the architectural level
 - Split a unified domain model into two: for commands and for queries
 
-CQRS provide
+CQRS benefit
 - better scalability
 - better performance
 - simpler code
@@ -49,9 +49,26 @@ the event inform external application. It is always in the past tense. Sever can
 All messages are part of the core domain (the central layer) in an Onion architecture. They should be isolated from 
 the outside world.
 
+#Commands & queries in the Onion architecture
+Commands, events and queries should reside in the core domain layer
+Commands is the push model: trigger from external system
+Event is pull model: trigger by the building application
+
+#Commands vs Queries in CQS an CQRS taxonomies
+-CQS: command is a method that mutate states
+-CQRS: command represent what you can do with an application
+
 #Commands vs DTOs
 Using commands in place of DTOs hinder your ability to refactor
-commands are serializable method calls.
-DTOs are data contracts and provide backward compatibility with data contract.
+commands explicitly state what an application can do
+DTOs help  achieve backward compatibility with data contract.
 If you don't need backward compatibility in your application, then it is fine not to use DTOs. 
 For example if you have a single client, if you can deploy client and API simultaneously.
+
+#Decorator
+it is a class or method that modifies the behavior of an existing class or method
+without changing its public interface. 
+Decorator introduce cross-cutting content and avoid code duplication.
+We  can separate technical concerns into decorator and functional concerns in handlers
+
+

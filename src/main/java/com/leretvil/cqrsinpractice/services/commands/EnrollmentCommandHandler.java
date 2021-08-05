@@ -2,7 +2,6 @@ package com.leretvil.cqrsinpractice.services.commands;
 
 import com.leretvil.cqrsinpractice.repository.EnrollmentRepository;
 import com.leretvil.cqrsinpractice.repository.domain.Enrollment;
-import com.leretvil.cqrsinpractice.services.ServiceProvider;
 import com.leretvil.cqrsinpractice.web.model.Result;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

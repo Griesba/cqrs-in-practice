@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class ServiceProvider {
+public class CommandServiceProvider {
 
     private final CommandHandlerFactory handlerFactory;
 
