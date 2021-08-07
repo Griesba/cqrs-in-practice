@@ -72,3 +72,51 @@ Decorator introduce cross-cutting content and avoid code duplication.
 We  can separate technical concerns into decorator and functional concerns in handlers
 
 
+#Separation of the domain model
+the fact  that we use same model for read and write leads to domain model over-complication and bad query performance.
+Are we going to have two domains model? no! we are going to take the domain model out of the read side.
+We will introduce a separate database for queries in order to scale reads indefinitely, adjust the read database for the need of the query model.
+Read model is a thin wrapper on top of the database. We can use database-specific features to optimize the performance. 
+
+Example of separations at the data level:
+- usage of index view
+- database replication
+- elasticSearch
+
+#Design database for reads
+- design is denormalized and adjusted to the need of read model. Only on table for student with associated courses
+- minimize the number of joins and the amount of post-processing
+We will end up with a 3rd normal relation forms for command and 1rd normal (denormalized) relation for queries
+
+#projection
+projections they are database synchronizations between commands and queries.
+When we separate database, we need a synchronization between command database and queries databases
+
+state-driven projection
+- synch projection : index views. Latency increase with complexity of queries (don't scale well)
+- asynch: database replication
+event-driven projection
+- projection subscribe to events for updates
+- scale very well
+- can use message bus
+- cannot rebuild the read database from scratch or in case of error
+
+#Eventual consistency
+ - a consistency model which guarantees that, if no new updates are made to a given item,
+   eventually all accesses to that item will return the last updated value. 
+ - train user not to expect data to be immediately consistent
+ - the real world is eventual consistent (not simultaneous)
+ - is problematics when the cost of making decision based on stale data is high
+ - use versioning to prevent modification on stale data: if user try to update data v2 when v1 is under synchronisation an error should be thrown
+
+#scalability vs performance
+scalability takes place when the performance of one server is not enough.
+Scalability: utilizing the resource of more than one server. 
+Processing of queries and commands is asymmetric. There are many more queries than command and events.
+
+
+#CQRS and Event sourcing
+- CQRS is not a transition to event sourcing
+- CQRS can stand alone without event sourcing, but you need CQRS to implement event sourcing
+- the bar for event sourcing is much higher than it is for CQRS
+- event sourcing system want to keep track of all event that lead to a particular state( a trail of the financial transactions)
